@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-
 const initialState={
     data:[]
 }
@@ -11,8 +10,11 @@ export const accountDetails=createSlice({
     reducers:{
         setAccountDetails:(state, action)=>{
             state.data=action.payload
-        }
-    }
+        },
+    },
+    selectors: {
+        selectData: state => state.account.data,
+      },
 
 })
 

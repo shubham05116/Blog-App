@@ -1,17 +1,31 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setEmail, setPassword } from "../store/slices/accountSlices/loginSlice";
-import { Link, useNavigate } from 'react-router-dom';
+import { setEmail, setIsLoggedIn, setPassword, setPrivateRoute } from "../store/slices/accountSlices/loginSlice";
+import {  useNavigate } from 'react-router-dom';
+import LoginForm from '../components/LoginForm';
+import { toast } from 'react-toastify';
 
-const LoginForm = () => {
-  const email = useSelector(state => state.login.email);
-  const password = useSelector(state => state.login.password);
+const Login = () => {
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  //formData:
+  const email = useSelector(state => state.login.email);
+  const password = useSelector(state => state.login.password);
+  const storedUserData = useSelector(state => state.account.data);
 
-  const [loggedIn, setLoggedIn] = useState(false);
+    //error handling:
+    const [emailError , setEmailError]=useState(false)
+    const [isValid , setIsValid]=useState(false)
 
   const handleEmailChange = (event) => {
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+    if (!emailRegex.test(event.target.value)) {
+      setEmailError(true)
+    }
+    else {
+      setEmailError(false)
+    }
     dispatch(setEmail(event.target.value));
   };
 
@@ -21,69 +35,60 @@ const LoginForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log('Form Submitted');
 
-    const storedUserData = JSON.parse(localStorage.getItem('UserData'));
- console.log(storedUserData)
-
-
-const found = storedUserData.find(element => element.email === email && element.password === password);
-
-    if(found){
-      console.log('Login Successful');
-      navigate('/home');
-    
+    if(email === '' && password === ''){
+      toast.error('Email and Password cannot be empty')
+    }
+   else if (email === '') {
+      toast.error('Email cannot be empty')
+      setIsValid(true)
+      setEmailError(true)
+      
+    }
+    else if (email !== '' && password === '') {
+      toast.error('Password cannot be empty')
+      setIsValid(true)
     }
     else{
-      console.log('Login Failed');
-      setLoggedIn(true);
+      setIsValid(false)
     }
 
+    dispatch(setPrivateRoute(true))
+
+    const found = storedUserData.find(element => element.email === email && element.password === password);
+
+    if (found && email !== '' && password !== '') {
+      console.log('Login Successful');
+      navigate('/home');
+      dispatch(setIsLoggedIn(true))
+      toast.success('Logged In successfully')
+      
+
+      dispatch(setEmail(''));
+      dispatch(setPassword(''));
+    }
+    else {
+      console.log('Login Failed');
+      setIsValid(true)
+    }
   }
-  
 
 
   return (
     <>
-      <div className='h-[100vh] flex flex-col justify-center items-center '>
-        <h1 className='text-3xl font-bold'>Login</h1>
-        <form onSubmit={submitHandler} className='flex flex-col' >
+      <LoginForm
+        email={email}
+        password={password}
+        handleEmailChange={handleEmailChange}
+        handlePasswordChange={handlePasswordChange}
+        submitHandler={submitHandler}
+        emailError={emailError}
+        isValid={isValid}
 
-          <label className='font-semibold' htmlFor=""> Email
-          </label>
+      />
 
-          <input className='border-2 border-black rounded-md p-1 m-1'
-            type="email"
-            value={email}
-            onChange={handleEmailChange}
-            placeholder="Enter your email"
-          />
-          <br />
-
-          <label className='font-semibold' htmlFor=""> Password 
-          </label>
-          <input
-            className='border-2 border-blue-400 rounded-md p-1 m-1'
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            placeholder="Enter your password"
-          />
-          <br />
-          {
-            loggedIn && <p className='text-red-500'>Invalid Credentials</p>
-          }
-          <br />
-          <p>Don't have an account ? <Link to={'/signup'}>Sign Up</Link> Now </p>
-          <button className='bg-orange-400 px-10 py-2 rounded-lg font-bold text-white ' type="submit">
-          Login
-        
-          </button>
-        </form>
-       
-      </div>
     </>
   );
 };
 
-export default LoginForm;
+export default Login;
