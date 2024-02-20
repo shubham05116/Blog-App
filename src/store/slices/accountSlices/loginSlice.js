@@ -5,7 +5,8 @@ const initialState={
     email:'',
     password:'',
     private:false,
-    isLoggedIn:false
+    isLoggedIn:false,
+    userBlogs:[],
 }
 
 export const loginSlice=createSlice({
@@ -23,7 +24,11 @@ export const loginSlice=createSlice({
         },
         setIsLoggedIn:(state,action)=>{
             state.isLoggedIn=action.payload
-        }
+        },
+       setUsersBlog:(state,action)=>{
+              state.userBlogs.push(action.payload)
+         
+       }
 },
 selectors: {
     selectData: state => state.account.data,

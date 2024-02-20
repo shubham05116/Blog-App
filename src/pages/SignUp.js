@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setConfirmPassword, setFirstName, setLastName, setPassword, setEmail, setIsSignedUp } from '../store/slices/accountSlices/signUpslice'
+import { setConfirmPassword, setFirstName, setLastName, setIsSignedUp, setSignedUpEmail, setSignedUpPassword } from '../store/slices/accountSlices/signUpslice'
 import { setAccountDetails } from '../store/slices/accountSlices/accountDetails'
 import { useNavigate } from 'react-router-dom'
 import SignupForm from '../components/SignupForm'
@@ -13,8 +13,8 @@ const SignUp = () => {
     //formData:
     const firstName = useSelector((state) => state.signUp.firstName)
     const lastName = useSelector((state) => state.signUp.lastName)
-    const email = useSelector((state) => state.signUp.email)
-    const password = useSelector((state) => state.signUp.password)
+    const signUpEmail = useSelector((state) => state.signUp.signUpEmail)
+    const signUpPassword = useSelector((state) => state.signUp.signUpPassword)
     const confirmPassword = useSelector((state) => state.signUp.confirmPassword)
     const storedData = useSelector((state) => state.account.data)
 
@@ -43,7 +43,7 @@ const SignUp = () => {
             document.getElementById('email').style.border = ''
             setEmailError(false)
         }
-        dispatch(setEmail(e.target.value))
+        dispatch(setSignedUpEmail(e.target.value))
     }
 
     const passwordHandler = (e) => {
@@ -56,11 +56,11 @@ const SignUp = () => {
             document.getElementById('password').style.border = ''
             setPasswordError(false)
         }
-        dispatch(setPassword(e.target.value))
+        dispatch(setSignedUpPassword(e.target.value))
     }
 
     const confirmPasswordHandler = (e) => {
-        if (password !== e.target.value) {
+        if (signUpPassword !== e.target.value) {
             setConfirmPassError(true)
         }
         else {
@@ -73,22 +73,22 @@ const SignUp = () => {
     const data = useSelector((state) => state.account.data)
     const submitHandler = (e) => {
         e.preventDefault();
-        const isEmailExists = storedData.find((data) => data.email === email)
+        const isEmailExists = storedData.find((data) => data.email === signUpEmail)
 
-        if (firstName === '' || lastName === '' || email === '' || password === '' || confirmPassword === '') {
+        if (firstName === '' || lastName === '' || signUpEmail === '' || signUpPassword === '' || confirmPassword === '') {
             setIsValidate(true)
         }
         else {
             setIsValidate(false)
         }
-        if (password !== confirmPassword) {
+        if (signUpPassword !== confirmPassword) {
             setConfirmPassError(true)
         }
-        else if (confirmPassword === password) {
+        else if (confirmPassword === signUpPassword) {
             setConfirmPassError(false)
         }
 
-        if (firstName !== '' && lastName !== '' && email !== '' && password !== '' && confirmPassword) {
+        if (firstName !== '' && lastName !== '' && signUpEmail !== '' && signUpPassword !== '' && confirmPassword) {
             if (isEmailExists) {
                 toast.error('Email already exists')
                 setEmailError(true)
@@ -98,7 +98,7 @@ const SignUp = () => {
                 toast.error('Please enter a valid email address or password')
             }
             else {
-                dispatch(setAccountDetails([...data, { firstName, lastName, email, password, confirmPassword }]));
+                dispatch(setAccountDetails([...data, { firstName, lastName, signUpEmail, signUpPassword, confirmPassword }]));
                 navigate('/home')
                 dispatch(setIsSignedUp(true))
                 toast.success('Account Created Successfully')
@@ -107,7 +107,7 @@ const SignUp = () => {
     }
     return (
         <>
-            <SignupForm submitHandler={submitHandler} firstName={firstName} lastName={lastName} email={email} password={password} confirmPassword={confirmPassword} confirmPassError={confirmPassError} firstNameHandler={firstNameHandler} lastNameHandler={lastNameHandler} emailHandler={emailHandler} passwordHandler={passwordHandler} confirmPasswordHandler={confirmPasswordHandler} emailError={emailError} passwordError={passwordError} isValidate={isValidate} />
+            <SignupForm submitHandler={submitHandler} firstName={firstName} lastName={lastName} email={signUpEmail} password={signUpPassword} confirmPassword={confirmPassword} confirmPassError={confirmPassError} firstNameHandler={firstNameHandler} lastNameHandler={lastNameHandler} emailHandler={emailHandler} passwordHandler={passwordHandler} confirmPasswordHandler={confirmPasswordHandler} emailError={emailError} passwordError={passwordError} isValidate={isValidate} />
         </>
 
     )

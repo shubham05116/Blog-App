@@ -59,8 +59,8 @@ const Login = () => {
     const encodedPass = Base64.encode(password) 
 
 
-    const found = storedUserData.find(element => element.email === email && element.password === password);
-    const findEmail = storedUserData.find(element => element.email === email);
+    const found = storedUserData.find(element => element.signUpEmail === email && element.signUpPassword === password);
+    const findEmail = storedUserData.find(element => element.signUpEmail === email);
 
     if (found && email !== '' && password !== '') {
       console.log('Login Successful');
@@ -69,7 +69,7 @@ const Login = () => {
       toast.success('Logged In successfully')
       SetCookies('userIn', JSON.stringify({
         email,
-         encodedPass
+        encodedPass
       }))
       // SetCookies('userIn', JSON.stringify(password))
     }

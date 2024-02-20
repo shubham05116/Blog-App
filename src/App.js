@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import CreateBlogs from "./pages/CreateBlogs";
 import MyBlogs from "./pages/MyBlogs";
 import MyProfile from "./pages/MyProfile";
+import DetailPage from "./pages/DetailPage";
 
 function App() {
   const isPrivateRoute = useSelector(state => state.login.private)
@@ -23,6 +24,7 @@ function App() {
        <Route path="/createBlog" element={<CreateBlogs/>}/>
        <Route path="/myBlogs" element={<MyBlogs/>}/>
     <Route path="/profile" element={<MyProfile />} />
+    <Route path='/detailPage/:id' element={<DetailPage/>}/>
         <Route path="*" element={<LoginForm />} />
       </Routes>
     </BrowserRouter>
