@@ -24,7 +24,10 @@ export const loginSlice=createSlice({
         setIsLoggedIn:(state,action)=>{
             state.isLoggedIn=action.payload
         }
-}
+},
+selectors: {
+    selectData: state => state.account.data,
+  },
 })
 
 export const {setEmail,setPassword,setPrivateRoute ,setIsLoggedIn}=loginSlice.actions

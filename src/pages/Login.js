@@ -4,6 +4,9 @@ import { setEmail, setIsLoggedIn, setPassword, setPrivateRoute } from "../store/
 import {  useNavigate } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import { toast } from 'react-toastify';
+import RemoveCookies from '../hooks/RemoveCookies';
+import SetCookies from '../hooks/SetCookies';
+import { Base64 } from 'js-base64';
 
 const Login = () => {
   
@@ -43,7 +46,6 @@ const Login = () => {
       toast.error('Email cannot be empty')
       setIsValid(true)
       setEmailError(true)
-      
     }
     else if (email !== '' && password === '') {
       toast.error('Password cannot be empty')
@@ -54,22 +56,32 @@ const Login = () => {
     }
 
     dispatch(setPrivateRoute(true))
+    const encodedPass = Base64.encode(password) 
+
 
     const found = storedUserData.find(element => element.email === email && element.password === password);
+    const findEmail = storedUserData.find(element => element.email === email);
 
     if (found && email !== '' && password !== '') {
       console.log('Login Successful');
       navigate('/home');
       dispatch(setIsLoggedIn(true))
       toast.success('Logged In successfully')
-      
-
-      dispatch(setEmail(''));
-      dispatch(setPassword(''));
+      SetCookies('userIn', JSON.stringify({
+        email,
+         encodedPass
+      }))
+      // SetCookies('userIn', JSON.stringify(password))
     }
-    else {
+    else if(!findEmail ) {
+      console.log('Login Failed');
+      // setIsValid(true)
+      setEmailError(true)
+    }
+    else{
       console.log('Login Failed');
       setIsValid(true)
+      setEmailError(false)
     }
   }
 

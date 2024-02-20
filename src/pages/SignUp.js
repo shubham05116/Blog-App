@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setConfirmPassword, setFirstName, setLastName, setPassword, setEmail } from '../store/slices/accountSlices/signUpslice'
+import { setConfirmPassword, setFirstName, setLastName, setPassword, setEmail, setIsSignedUp } from '../store/slices/accountSlices/signUpslice'
 import { setAccountDetails } from '../store/slices/accountSlices/accountDetails'
 import { useNavigate } from 'react-router-dom'
 import SignupForm from '../components/SignupForm'
 import { toast } from 'react-toastify'
-import { setIsLoggedIn } from '../store/slices/accountSlices/loginSlice'
+import SetCookies from '../hooks/SetCookies'
 
 const SignUp = () => {
     const dispatch = useDispatch()
@@ -100,13 +100,8 @@ const SignUp = () => {
             else {
                 dispatch(setAccountDetails([...data, { firstName, lastName, email, password, confirmPassword }]));
                 navigate('/home')
-                dispatch(setIsLoggedIn(true))
+                dispatch(setIsSignedUp(true))
                 toast.success('Account Created Successfully')
-                dispatch(setFirstName(''));
-                dispatch(setLastName(''));
-                dispatch(setEmail(''));
-                dispatch(setPassword(''));
-                dispatch(setConfirmPassword(''));
             }
         }
     }

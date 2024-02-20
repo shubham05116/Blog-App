@@ -6,6 +6,7 @@ const initialState={
     email:'',
     password:'',
     confirmPassword:'',
+    isSignedUp:false,
 
 }
 
@@ -28,6 +29,10 @@ export const signUpSlice= createSlice({
         setConfirmPassword:(state, action)=>{
             state.confirmPassword=action.payload
         },
+
+        setIsSignedUp:(state, action)=>{
+            state.isSignedUp=action.payload
+        }
         
     
 
@@ -36,5 +41,5 @@ export const signUpSlice= createSlice({
 })
 
 
-export const {setFirstName, setLastName, setEmail, setPassword, setConfirmPassword }=signUpSlice.actions
+export const {setFirstName, setLastName, setEmail, setPassword, setConfirmPassword, setIsSignedUp }=signUpSlice.actions
 export default signUpSlice.reducer

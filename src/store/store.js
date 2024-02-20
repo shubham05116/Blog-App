@@ -5,6 +5,8 @@ import accountReducer from './slices/accountSlices/accountDetails'
 import { combineReducers } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import addBlogReducer from './slices/Blogs/addBlogSlice'
+import blogDetailsReducer from './slices/Blogs/blogDetails'
 
 const persistConfig = {
   key: 'root',
@@ -13,9 +15,10 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   login: loginReducer,
+  blog: blogDetailsReducer,
   signUp: signUpReducer,
   account: accountReducer,
-  
+  addBlog: addBlogReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
