@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 const MyProfile = () => {
-    const storedData = useSelector((state) => state.account.data);
+    const storedUserData = useSelector((state) => state.account.data);
     const email = useSelector((state) => state.login.email);
     const signedUpEmail = useSelector((state) => state.signUp.signUpEmail);
 
-    const filterData = storedData.filter((user) => {
+    const filterData = storedUserData.filter((user) => {
         return user.signUpEmail === email;
     });
 
-    const filterD = storedData.filter((user) => {
+    const filterD = storedUserData.filter((user) => {
         return user.signUpEmail === signedUpEmail;
     });
 
@@ -30,6 +30,7 @@ const MyProfile = () => {
                     );
                 })
             ) : (
+                
                 filterD.map((user, index) => {
                     return (
                         <div key={index} className="border rounded p-4 mb-4">

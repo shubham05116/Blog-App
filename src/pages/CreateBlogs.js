@@ -4,6 +4,7 @@ import { setContent, setId, setImage, setTitle } from '../store/slices/Blogs/add
 import { setBlogs } from '../store/slices/Blogs/blogDetails';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 const CreateBlogs = () => {
     const navigate= useNavigate();
@@ -31,7 +32,7 @@ const CreateBlogs = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(setBlogs([...blogs, {id, title, content,image }]))
-
+navigate('/home')
         toast.success('Blog Created Successfully')
         dispatch(setTitle(''));
         dispatch(setContent(''));
@@ -44,6 +45,7 @@ const CreateBlogs = () => {
 
     return (
         <div className="p-4">
+        <Navbar/>
             <h1 className="text-3xl font-bold mb-4">Create a Blog</h1>
               <button onClick={allMyBlogsHandler} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Previos Blogs</button>
 

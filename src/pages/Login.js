@@ -15,7 +15,7 @@ const Login = () => {
   //formData:
   const email = useSelector(state => state.login.email);
   const password = useSelector(state => state.login.password);
-  const storedUserData = useSelector(state => state.account.data);
+  const storedUserDataData = useSelector(state => state.account.data);
 
     //error handling:
     const [emailError , setEmailError]=useState(false)
@@ -59,8 +59,8 @@ const Login = () => {
     const encodedPass = Base64.encode(password) 
 
 
-    const found = storedUserData.find(element => element.signUpEmail === email && element.signUpPassword === password);
-    const findEmail = storedUserData.find(element => element.signUpEmail === email);
+    const found = storedUserDataData.find(element => element.signUpEmail === email && element.signUpPassword === password);
+    const findEmail = storedUserDataData.find(element => element.signUpEmail === email);
 
     if (found && email !== '' && password !== '') {
       console.log('Login Successful');

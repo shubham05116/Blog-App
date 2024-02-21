@@ -16,7 +16,7 @@ const SignUp = () => {
     const signUpEmail = useSelector((state) => state.signUp.signUpEmail)
     const signUpPassword = useSelector((state) => state.signUp.signUpPassword)
     const confirmPassword = useSelector((state) => state.signUp.confirmPassword)
-    const storedData = useSelector((state) => state.account.data)
+    const storedUserData = useSelector((state) => state.account.data)
 
     //error handling:
     const [confirmPassError, setConfirmPassError] = useState(false)
@@ -73,7 +73,7 @@ const SignUp = () => {
     const data = useSelector((state) => state.account.data)
     const submitHandler = (e) => {
         e.preventDefault();
-        const isEmailExists = storedData.find((data) => data.email === signUpEmail)
+        const isEmailExists = storedUserData.find((data) => data.email === signUpEmail)
 
         if (firstName === '' || lastName === '' || signUpEmail === '' || signUpPassword === '' || confirmPassword === '') {
             setIsValidate(true)

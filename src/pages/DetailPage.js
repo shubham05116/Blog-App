@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Navbar from '../components/Navbar';
 
 const DetailPage = () => {
     const singleBlog = useSelector(state => state.addBlog.singleBlog);
 
     return (
         <div>
+        <Navbar/>
             {singleBlog && (
                 <div className="p-4">
                     <h1 className="text-3xl font-bold">{singleBlog.title}</h1>

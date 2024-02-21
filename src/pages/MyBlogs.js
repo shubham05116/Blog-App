@@ -14,6 +14,11 @@ const MyBlogs = () => {
         navigate('/createBlog')
     }
 
+    const deleteHandler = (id) => {
+        const updatedBlogs = blogDetails.filter(blog => blog.id !== id);
+        dispatch(setBlogs(updatedBlogs));
+    }
+
     return (
         <div className="p-4">
             <div className="text-3xl font-bold mb-4">These are all Your Blogs</div>
@@ -26,7 +31,7 @@ const MyBlogs = () => {
                         <h1 className="text-3xl font-bold">{blog.title}</h1>
                         <p className="mt-2">{blog.content}</p>
                         {blog.image && <img src={blog.image} alt={blog.title} className="mt-4" />}
-                        {/* <button onClick={() => deleteHandler(blog.id)} className="mt-4 p-2 bg-red-500 rounded-lg text-white">Delete</button> */}
+                        <button onClick={() => deleteHandler(blog.id)} className="mt-4 p-2 bg-red-500 rounded-lg text-white">Delete</button>
                     </div>
                 );
             })}
