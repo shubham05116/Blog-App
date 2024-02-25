@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  userId:null,
   id: '',
   title: '',
   content: '',
   image: '',
-  singleBlog: {},
+  singleBlog: '',
 };
 
 const addBlogSlice = createSlice({
@@ -27,9 +28,12 @@ const addBlogSlice = createSlice({
     setImage: (state, action) => {
       state.image = action.payload;
     },
+    setUserId: (state, action) => {
+      state.userId = action.payload;
+    }
   },
 });
 
-export const { setTitle, setContent, setImage , setId ,setSingleBlog} = addBlogSlice.actions;
+export const { setTitle, setContent, setImage , setId ,setUserId,setSingleBlog} = addBlogSlice.actions;
 
 export default addBlogSlice.reducer;

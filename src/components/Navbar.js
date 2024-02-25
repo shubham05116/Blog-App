@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -9,19 +9,17 @@ const Navbar = () => {
     const [dropDown, setDropDown] = useState(false);
     const isSignedUp = useSelector(state => state.signUp.isSignedUp);
     const storedUserData = useSelector(state => state.account.data);
-  
+    const navigate = useNavigate();
     const email = useSelector((state) => state.login.email);
- 
+
+
+    const dopDownHandler = () => {
+      setDropDown(!dropDown);
+    };
 
     const filterData = storedUserData.filter((user) => {
         return user.signUpEmail === email;
     });
-
-    const navigate = useNavigate();
-  
-    const dopDownHandler = () => {
-      setDropDown(!dropDown);
-    };
 
 
 const homePageHandler=()=>{
@@ -39,11 +37,11 @@ const filterD = storedUserData.filter((user) => {
   return (
     <div>
       {isLoggedIn ? (
-        <div className='flex justify-between items-center border-2 border-gray-400 bg-slate-200 shadow-xl mb-10'>
+        <div className='flex justify-between items-center bg-red-300 shadow-xl text-white py-2 mb-10'>
         <div>
             <h1 className="text-3xl font-bold ">All Blogs</h1>
           </div>
-          <div onClick={homePageHandler} className='cursor-pointer '>Home</div>
+          <div onClick={homePageHandler} className='cursor-pointer font-bold text-lg '>Home</div>
           <div className="flex items-center ">
             {filterData.map((user)=><p className='font-bold'>{user.firstName}</p>)}
 
@@ -63,7 +61,7 @@ const filterD = storedUserData.filter((user) => {
         <div>
             <h1 className="text-3xl font-bold ">All Blogs</h1>
           </div>
-          <div onClick={homePageHandler} className='cursor-pointer '>Home</div>
+          <div onClick={homePageHandler} className='cursor-pointer font-bold text-lg  '>Home</div>
           <div className="flex items-center ">
             {
               filterD.map((user)=> <p className='font-bold'>{user.firstName}</p>)

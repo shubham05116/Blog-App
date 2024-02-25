@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import RemoveCookies from '../hooks/RemoveCookies';
 import SetCookies from '../hooks/SetCookies';
 import { Base64 } from 'js-base64';
+import { setUserId } from '../store/slices/accountSlices/signUpslice';
 
 const Login = () => {
   
@@ -55,7 +56,6 @@ const Login = () => {
       setIsValid(false)
     }
 
-    dispatch(setPrivateRoute(true))
     const encodedPass = Base64.encode(password) 
 
 
@@ -63,6 +63,8 @@ const Login = () => {
     const findEmail = storedUserDataData.find(element => element.signUpEmail === email);
 
     if (found && email !== '' && password !== '') {
+      dispatch(setUserId(found.userId));
+
       console.log('Login Successful');
       navigate('/home');
       dispatch(setIsLoggedIn(true))

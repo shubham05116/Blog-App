@@ -9,34 +9,44 @@ import MyProfile from "./pages/MyProfile";
 import DetailPage from "./pages/DetailPage";
 import ErrorPage from "./components/ErrorPage";
 
+
 function App() {
-  const isPrivateRoute = useSelector(state => state.login.private)
+
   const isLoggedIn = useSelector(state => state.login.isLoggedIn)
-  
+  const isSignedUp = useSelector(state => state.signUp.isSignedUp)
+
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+
         <Route path="/signup" element={<SignUp />} />
+
         <Route path="/home" element={
-          isLoggedIn ? <Home /> :<ErrorPage/>
+          isLoggedIn || isSignedUp ? <Home /> : <ErrorPage />
         } />
-       <Route path="/createBlog" element={
-          isLoggedIn ? <CreateBlogs /> :<ErrorPage/>
+
+        <Route path="/createBlog" element={
+          isLoggedIn || isSignedUp ? <CreateBlogs /> : <ErrorPage />
         } />
-       <Route path="/myBlogs" element={
-          isLoggedIn ? <MyBlogs /> :<ErrorPage/>
+
+        <Route path="/myBlogs" element={
+          isLoggedIn || isSignedUp ? <MyBlogs /> : <ErrorPage />
         } />
-    <Route path="/profile" element={
-          isLoggedIn ? <MyProfile /> :<ErrorPage/>
-        }  />
-    <Route path='/detailPage/:id' element={
-          isLoggedIn ? <DetailPage /> :<ErrorPage/>
+
+        <Route path="/profile" element={
+          isLoggedIn || isSignedUp ? <MyProfile /> : <ErrorPage />
         } />
-        <Route path="*" element={<Login />} />
+
+        <Route path='/detailPage/:id' element={
+          isLoggedIn || isSignedUp ? <DetailPage /> : <ErrorPage />
+        } />
+
+        <Route path="*" element={"Page Not found"} />
+
       </Routes>
     </BrowserRouter>
-
 
   );
 }

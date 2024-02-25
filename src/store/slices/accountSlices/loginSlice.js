@@ -4,7 +4,6 @@ import {createSlice} from '@reduxjs/toolkit'
 const initialState={
     email:'',
     password:'',
-    private:false,
     isLoggedIn:false,
 }
 
@@ -27,5 +26,5 @@ export const loginSlice=createSlice({
 }
 })
 
-export const {setEmail,setPassword,setPrivateRoute ,setIsLoggedIn}=loginSlice.actions
+export const {setEmail,setPassword, setIsLoggedIn}=loginSlice.actions
 export default loginSlice.reducer

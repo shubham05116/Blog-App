@@ -8,6 +8,7 @@ import storage from 'redux-persist/lib/storage'
 import addBlogReducer from './slices/Blogs/addBlogSlice'
 import blogDetailsReducer from './slices/Blogs/blogDetails'
 
+
 const persistConfig = {
   key: 'root',
   storage,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setConfirmPassword, setFirstName, setLastName, setIsSignedUp, setSignedUpEmail, setSignedUpPassword } from '../store/slices/accountSlices/signUpslice'
+import { setConfirmPassword, setFirstName, setLastName, setIsSignedUp, setSignedUpEmail, setSignedUpPassword, setUserId } from '../store/slices/accountSlices/signUpslice'
 import { setAccountDetails } from '../store/slices/accountSlices/accountDetails'
 import { useNavigate } from 'react-router-dom'
 import SignupForm from '../components/SignupForm'
@@ -17,6 +17,7 @@ const SignUp = () => {
     const signUpPassword = useSelector((state) => state.signUp.signUpPassword)
     const confirmPassword = useSelector((state) => state.signUp.confirmPassword)
     const storedUserData = useSelector((state) => state.account.data)
+    const userId = useSelector((state) => state.signUp.userId)
 
     //error handling:
     const [confirmPassError, setConfirmPassError] = useState(false)
@@ -98,7 +99,10 @@ const SignUp = () => {
                 toast.error('Please enter a valid email address or password')
             }
             else {
-                dispatch(setAccountDetails([...data, { firstName, lastName, signUpEmail, signUpPassword, confirmPassword }]));
+                dispatch(setUserId(Math.random().toString().substr(2, 9)))
+                dispatch(setAccountDetails([...data, {userId, firstName, lastName, signUpEmail, signUpPassword, confirmPassword }]));
+                console.log(userId)
+
                 navigate('/home')
                 dispatch(setIsSignedUp(true))
                 toast.success('Account Created Successfully')

@@ -11,8 +11,9 @@ const DetailPage = () => {
             {singleBlog && (
                 <div className="p-4">
                     <h1 className="text-3xl font-bold">{singleBlog.title}</h1>
-                    <p className="mt-2">{singleBlog.content}</p>
                     {singleBlog.image && <img src={singleBlog.image} alt={singleBlog.title} className="mt-4" />}
+                    <p className="mt-2">{singleBlog.content}</p>
+                 
                 </div>
             )}
             {!singleBlog && <p>No blog selected</p>}

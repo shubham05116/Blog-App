@@ -7,6 +7,7 @@ const AllBlogs = () => {
     const dispatch = useDispatch();
     const blogs = useSelector(state => state.blog.data);
     const navigate= useNavigate();
+  
 
     const detailViewHandler = (id) => {
         const selectedBlog = blogs.find(blog => blog.id === id);
@@ -22,10 +23,11 @@ const AllBlogs = () => {
                 {blogs.map((blog) => (
                     <div key={blog.id} className="border rounded-md p-4">
                         <h1 className="text-xl font-semibold mb-2">{blog.title}</h1>
-                        <p className="text-gray-700">{`${blog.content.substring(0,300)}.................`}</p>
                         {blog.image && <img src={blog.image} alt={blog.title} className="mt-4 w-full" />}
+                        <p className="text-gray-700">{`${blog.content.substring(0,300)}...............`}</p>
+                       
                         <br />
-                        <button onClick={() => detailViewHandler(blog.id)} className='p-2 bg-blue-400 text-white font-bold rounded-lg' >Full View </button>
+                        <button onClick={() => detailViewHandler(blog.id)} className='p-2 bg-blue-500  hover:bg-blue-700 text-white font-bold rounded-lg' >Full View </button>
                     </div>
                 ))}
             </div>
